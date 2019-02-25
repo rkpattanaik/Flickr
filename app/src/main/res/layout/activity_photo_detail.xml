@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".detail.PhotoDetailActivity">
+
+    <include layout="@layout/toolbar" android:id="@+id/include"/>
+
+    <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/photo"
+            tools:srcCompat="@tools:sample/backgrounds/scenic[1]"/>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/tvPhotoTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="16sp"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civPersonPhoto"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"/>
+
+                    <TextView
+                            android:id="@+id/tvPersonName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
