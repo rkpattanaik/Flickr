@@ -9,6 +9,7 @@ interface FlickrApi {
 
     companion object {
         const val API_KEY = "6bf318919bbbc455f3573d18798a58e3"
+        const val BASE_URL = "https://api.flickr.com/services/"
     }
 
     @GET("rest/?method=flickr.photos.getRecent&api_key=$API_KEY" +

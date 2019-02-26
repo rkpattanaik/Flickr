@@ -2,18 +2,22 @@ package com.rkpattanaik.flickr.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkpattanaik.flickr.R
 import com.rkpattanaik.flickr.data.model.Photo
 import com.rkpattanaik.flickr.detail.PhotoDetailActivity
 import com.rkpattanaik.flickr.search.PhotoSearchActivity
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), PhotosAdapter.OnPhotoClickListener {
+class HomeActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoClickListener {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: HomeViewModel
     private lateinit var photosAdapter: PhotosAdapter
 
@@ -22,7 +26,7 @@ class HomeActivity : AppCompatActivity(), PhotosAdapter.OnPhotoClickListener {
         setContentView(R.layout.activity_home)
 
         initRecyclerView()
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
         observeViewModel()
 
         fabSearch.setOnClickListener {

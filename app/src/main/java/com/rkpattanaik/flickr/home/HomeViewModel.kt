@@ -4,15 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rkpattanaik.flickr.data.model.Photo
 import com.rkpattanaik.flickr.data.repo.PhotoRepository
-import com.rkpattanaik.flickr.data.repo.PhotoRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class HomeViewModel: ViewModel() {
+
+class HomeViewModel @Inject constructor(private val repository: PhotoRepository): ViewModel() {
 
     private val photoListLiveData = MutableLiveData<List<Photo>>()
-    private val repository: PhotoRepository = PhotoRepositoryImpl()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     init {

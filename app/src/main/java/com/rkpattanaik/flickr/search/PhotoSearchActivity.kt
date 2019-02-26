@@ -6,20 +6,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkpattanaik.flickr.R
 import com.rkpattanaik.flickr.data.model.Photo
 import com.rkpattanaik.flickr.detail.PhotoDetailActivity
 import com.rkpattanaik.flickr.home.PhotosAdapter
-import kotlinx.android.synthetic.main.activity_home.*
+import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_photo_search.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
-class PhotoSearchActivity : AppCompatActivity(), PhotosAdapter.OnPhotoClickListener {
+class PhotoSearchActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoClickListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: PhotoSearchViewModel
     private lateinit var photosAdapter: PhotosAdapter
 
@@ -29,7 +34,7 @@ class PhotoSearchActivity : AppCompatActivity(), PhotosAdapter.OnPhotoClickListe
         setSupportActionBar(toolbar)
 
         initRecyclerView()
-        viewModel = ViewModelProviders.of(this).get(PhotoSearchViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PhotoSearchViewModel::class.java)
         observeViewModel()
     }
 
@@ -47,6 +52,10 @@ class PhotoSearchActivity : AppCompatActivity(), PhotosAdapter.OnPhotoClickListe
         viewModel.getPhotoListLiveData().observe(this@PhotoSearchActivity, Observer { photos ->
             if (photos == null) return@Observer
             photosAdapter.setPhotos(photos)
+        })
+
+        viewModel.getShowProgressLiveData().observe(this@PhotoSearchActivity, Observer { show ->
+            progressBar.visibility = if (show) View.VISIBLE else View.GONE
         })
     }
 
